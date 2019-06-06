@@ -13,8 +13,10 @@ settings.set('FEED_FORMAT', 'csv')
 settings.set('FEED_URI', 'stats.csv')
 
 runner = CrawlerRunner(settings)
-if len(sys.argv) > 1:
-    d = runner.crawl(GladiaspiderSpider, max_r=sys.argv[1])
+if len(sys.argv) > 2:
+    d = runner.crawl(GladiaspiderSpider, max_r=sys.argv[1], player=sys.argv[2])
+elif len(sys.argv) > 1:
+     d = runner.crawl(GladiaspiderSpider, max_r=sys.argv[1])
 else:
     d = runner.crawl(GladiaspiderSpider, max_r='100')
 d.addBoth(lambda _: reactor.stop())

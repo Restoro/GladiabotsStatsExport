@@ -9,8 +9,9 @@ class GladiaspiderSpider(scrapy.Spider):
         self.current_results = 0
         self.current_page = 1
         self.max_results = int(getattr(self, 'max_r', 100))
+        self.player = getattr(self, 'player', 'Restoro')
         urls = [
-            'https://stats.gladiabots.com/player?&display=matches&matchMode=1&name=ThordanSsoa&page=1'
+            'https://stats.gladiabots.com/player?&display=matches&matchMode=1&name={}&page=1'.format(self.player)
         ]
 
         for url in urls:
@@ -33,7 +34,7 @@ class GladiaspiderSpider(scrapy.Spider):
 
         if self.current_results < self.max_results:
             self.current_page += 1
-            next_page = 'https://stats.gladiabots.com/player?&display=matches&matchMode=1&name=ThordanSsoa&page={}'.format(self.current_page)
+            next_page = 'https://stats.gladiabots.com/player?&display=matches&matchMode=1&name={0}&page={1}'.format(self.player, self.current_page)
             print(next_page)
             if next_page is not None:
                 yield response.follow(next_page, self.parse)
