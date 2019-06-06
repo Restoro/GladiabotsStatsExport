@@ -27,6 +27,7 @@ class GladiaspiderSpider(scrapy.Spider):
                     'score_delta': matchresult.css('td::text')[4].get(),
                     'current_elo': matchresult.css('td::text')[5].get().split()[0],
                     'enemy_elo': matchresult.css('td.player i::text').get().strip(' ()'),
+					'enemy_name': matchresult.css('td.player i a::text').get(),
                     'gained points': matchresult.css('td::text')[5].get().split()[1],
                     'outcome': self.get_outcome(matchresult)
                 }
