@@ -4,7 +4,7 @@ import io
 import os
 import six
 
-from scrapy.conf import settings
+from scrapy.utils.project import get_project_settings
 from scrapy.exporters import CsvItemExporter
 
 from scrapy.extensions.feedexport import IFeedStorage
@@ -21,7 +21,7 @@ class FixedFileFeedStorage(object):
         dirname = os.path.dirname(self.path)
         if dirname and not os.path.exists(dirname):
             os.makedirs(dirname)
-        return open(self.path, 'ab')
+        return open(self.path, 'wb')
 
     def store(self, file):
         file.close()
@@ -31,7 +31,7 @@ class FixedFileFeedStorage(object):
 class MyCsvItemExporter(CsvItemExporter):
 
     def __init__(self, file, include_headers_line=True, join_multivalued=',', **kwargs):
-
+        settings = get_project_settings()
         # Custom delimiter
         delimiter = settings.get('CSV_DELIMITER', ';')
         kwargs['delimiter'] = delimiter
