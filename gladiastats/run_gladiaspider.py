@@ -18,6 +18,6 @@ if len(sys.argv) > 2:
 elif len(sys.argv) > 1:
      d = runner.crawl(GladiaspiderSpider, max_r=sys.argv[1])
 else:
-    d = runner.crawl(GladiaspiderSpider, max_r='100')
+    d = runner.crawl(GladiaspiderSpider, max_r='1000')
 d.addBoth(lambda _: reactor.stop())
 reactor.run() # the script will block here until the crawling is finished
